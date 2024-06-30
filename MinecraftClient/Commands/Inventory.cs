@@ -279,7 +279,7 @@ namespace MinecraftClient.Commands
             if (inventory == null)
                 return r.SetAndReturn(CmdResult.Status.Fail, string.Format(Translations.cmd_inventory_not_exist, inventoryId));
 
-            if (handler.CloseInventory(inventoryId.Value))
+            if (handler.CloseInventory(inventory.ID))
                 return r.SetAndReturn(CmdResult.Status.Done, string.Format(Translations.cmd_inventory_close, inventoryId));
             else
                 return r.SetAndReturn(CmdResult.Status.Fail, string.Format(Translations.cmd_inventory_close_fail, inventoryId));
@@ -356,7 +356,7 @@ namespace MinecraftClient.Commands
             };
 
             handler.Log.Info(string.Format(Translations.cmd_inventory_clicking, keyName, slot, inventoryId));
-            return r.SetAndReturn(handler.DoWindowAction(inventoryId.Value, slot, actionType));
+            return r.SetAndReturn(handler.DoWindowAction(inventory.ID, slot, actionType));
         }
 
         private int DoDropAction(CmdResult r, int? inventoryId, int slot, WindowActionType actionType)
@@ -380,7 +380,7 @@ namespace MinecraftClient.Commands
             if (!inventory.Items.ContainsKey(slot))
                 return r.SetAndReturn(CmdResult.Status.Fail, string.Format(Translations.cmd_inventory_no_item, slot));
 
-            if (handler.DoWindowAction(inventoryId.Value, slot, actionType))
+            if (handler.DoWindowAction(inventory.ID, slot, actionType))
             {
                 if (actionType == WindowActionType.DropItemStack)
                     return r.SetAndReturn(CmdResult.Status.Done, string.Format(Translations.cmd_inventory_drop_stack, slot));

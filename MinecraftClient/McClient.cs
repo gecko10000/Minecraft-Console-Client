@@ -2811,7 +2811,8 @@ namespace MinecraftClient
         /// <param name="inventoryID">Inventory ID</param>
         public void OnInventoryOpen(int inventoryID, Container inventory)
         {
-            inventories[inventoryID] = inventory;
+            int globalId = inventoryID == 0 ? 0 : (GetInventories().Keys.ToList().Max() + 1);
+            inventories[globalId] = inventory;
 
             if (inventoryID != 0)
             {
